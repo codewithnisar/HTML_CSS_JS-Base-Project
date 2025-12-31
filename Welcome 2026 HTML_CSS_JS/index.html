@@ -1,0 +1,757 @@
+d<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2025 to 2026 Transformation | New Year Animation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0a0a14 0%, #1a1a2e 50%, #16213e 100%);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            z-index: 10;
+            padding: 20px;
+        }
+        
+        /* Main Animation Container */
+        .animation-container {
+            width: 100%;
+            height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: visible;
+        }
+        
+        /* Year Display */
+        .year-display {
+            font-family: 'Playfair Display', serif;
+            font-weight: 900;
+            font-size: 18vw;
+            line-height: 0.9;
+            text-align: center;
+            position: relative;
+            z-index: 5;
+            margin-bottom: 30px;
+            letter-spacing: -5px;
+            height: 35vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        @media (min-width: 768px) {
+            .year-display {
+                font-size: 180px;
+            }
+        }
+        
+        /* Individual Digit Styling */
+        .digit {
+            display: inline-block;
+            position: relative;
+            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .digit-2 {
+            background: linear-gradient(135deg, #ff7ee6, #9d4edd);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .digit-0 {
+            background: linear-gradient(135deg, #4cc9f0, #4361ee);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .digit-5 {
+            background: linear-gradient(135deg, #ffb347, #ffcc33);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+        }
+        
+        .digit-6 {
+            background: linear-gradient(135deg, #f72585, #b5179e);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+            opacity: 0;
+            transform: scale(0.5) rotate(-180deg);
+        }
+        
+        /* Explosion Effect for "5" */
+        .explosion-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100px;
+            height: 100px;
+            pointer-events: none;
+            z-index: 20;
+            opacity: 0;
+        }
+        
+        .explosion-particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ffb347, #ffcc33);
+            opacity: 0;
+        }
+        
+        /* Transition Effect */
+        .transition-effect {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(247, 37, 133, 0.8) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            z-index: 15;
+            opacity: 0;
+        }
+        
+        /* Control Buttons */
+        .controls {
+            display: flex;
+            gap: 20px;
+            margin-top: 30px;
+            z-index: 10;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #4361ee, #3a0ca3);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+        }
+        
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(67, 97, 238, 0.4);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .btn-reset {
+            background: linear-gradient(135deg, #7209b7, #560bad);
+        }
+        
+        /* Final 2026 Graphic */
+        .final-graphic {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 25;
+            transition: opacity 1s ease;
+        }
+        
+        .final-year {
+            font-family: 'Playfair Display', serif;
+            font-weight: 900;
+            font-size: 18vw;
+            line-height: 0.9;
+            text-align: center;
+            margin-bottom: 20px;
+            letter-spacing: -5px;
+            background: linear-gradient(135deg, #ff7ee6, #9d4edd, #4cc9f0, #4361ee, #f72585);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 30px rgba(255, 126, 230, 0.5));
+        }
+        
+        @media (min-width: 768px) {
+            .final-year {
+                font-size: 180px;
+            }
+        }
+        
+        .final-subtitle {
+            font-size: 2rem;
+            font-weight: 300;
+            letter-spacing: 10px;
+            text-transform: uppercase;
+            margin-top: 10px;
+            color: rgba(255, 255, 255, 0.9);
+            text-align: center;
+        }
+        
+        /* Celebration Elements */
+        .celebration-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 5;
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            opacity: 0;
+            border-radius: 3px;
+        }
+        
+        .firework {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            opacity: 0;
+        }
+        
+        /* Countdown Text */
+        .countdown-text {
+            font-size: 1.5rem;
+            font-weight: 300;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+            color: rgba(255, 255, 255, 0.8);
+            text-align: center;
+            z-index: 10;
+        }
+        
+        /* Instructions */
+        .instructions {
+            position: absolute;
+            bottom: 30px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+            padding: 0 20px;
+            z-index: 10;
+        }
+        
+        /* Background Effects */
+        .bg-shape {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.1;
+            z-index: 1;
+        }
+        
+        .bg-shape-1 {
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, #9d4edd, transparent 70%);
+            top: 10%;
+            left: 5%;
+            animation: float 20s infinite linear;
+        }
+        
+        .bg-shape-2 {
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, #4361ee, transparent 70%);
+            bottom: 15%;
+            right: 10%;
+            animation: float 25s infinite linear reverse;
+        }
+        
+        /* Animations */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+            }
+        }
+        
+        @keyframes explode {
+            0% {
+                opacity: 1;
+                transform: scale(0);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(1.5);
+            }
+        }
+        
+        @keyframes particleFly {
+            0% {
+                opacity: 1;
+                transform: translate(0, 0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(var(--tx), var(--ty)) scale(0);
+            }
+        }
+        
+        @keyframes glowPulse {
+            0%, 100% {
+                filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+            }
+            50% {
+                filter: drop-shadow(0 0 30px rgba(255, 255, 255, 0.8));
+            }
+        }
+        
+        @keyframes numberAppear {
+            0% {
+                opacity: 0;
+                transform: scale(0.2) rotate(-180deg);
+            }
+            70% {
+                opacity: 1;
+                transform: scale(1.2) rotate(10deg);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .year-display {
+                font-size: 22vw;
+                height: 25vh;
+            }
+            
+            .final-year {
+                font-size: 22vw;
+            }
+            
+            .final-subtitle {
+                font-size: 1.5rem;
+                letter-spacing: 5px;
+            }
+            
+            .countdown-text {
+                font-size: 1.2rem;
+            }
+            
+            .btn {
+                padding: 12px 24px;
+                font-size: 1rem;
+            }
+            
+            .controls {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .year-display {
+                font-size: 28vw;
+            }
+            
+            .final-year {
+                font-size: 28vw;
+            }
+            
+            .final-subtitle {
+                font-size: 1.2rem;
+                letter-spacing: 3px;
+            }
+            
+            .countdown-text {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Countdown Text -->
+        <div class="countdown-text" id="countdownText">Watch 2025 transform into 2026</div>
+        
+        <!-- Main Animation -->
+        <div class="animation-container">
+            <!-- Year Display -->
+            <div class="year-display" id="yearDisplay">
+                <span class="digit digit-2">2</span>
+                <span class="digit digit-0">0</span>
+                <span class="digit digit-2">2</span>
+                <span class="digit digit-5" id="digit5">5</span>
+                <span class="digit digit-6" id="digit6">6</span>
+            </div>
+            
+            <!-- Explosion Effect -->
+            <div class="explosion-container" id="explosionContainer"></div>
+            
+            <!-- Transition Effect -->
+            <div class="transition-effect" id="transitionEffect"></div>
+            
+            <!-- Final 2026 Graphic -->
+            <div class="final-graphic" id="finalGraphic">
+                <div class="final-year">2026</div>
+                <div class="final-subtitle">Happy New Year</div>
+            </div>
+        </div>
+        
+        <!-- Control Buttons -->
+        <div class="controls">
+            <button class="btn" id="startBtn">
+                <i class="fas fa-play"></i>
+                <span>Start Transformation</span>
+            </button>
+            <button class="btn btn-reset" id="resetBtn">
+                <i class="fas fa-redo"></i>
+                <span>Reset Animation</span>
+            </button>
+        </div>
+        
+        <!-- Instructions -->
+        <div class="instructions">
+            Click "Start Transformation" to see 2025 transform into 2026 with special effects
+        </div>
+        
+        <!-- Background Shapes -->
+        <div class="bg-shape bg-shape-1"></div>
+        <div class="bg-shape bg-shape-2"></div>
+        
+        <!-- Celebration Container -->
+        <div class="celebration-container" id="celebrationContainer"></div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const yearDisplay = document.getElementById('yearDisplay');
+        const digit5 = document.getElementById('digit5');
+        const digit6 = document.getElementById('digit6');
+        const explosionContainer = document.getElementById('explosionContainer');
+        const transitionEffect = document.getElementById('transitionEffect');
+        const finalGraphic = document.getElementById('finalGraphic');
+        const startBtn = document.getElementById('startBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const countdownText = document.getElementById('countdownText');
+        const celebrationContainer = document.getElementById('celebrationContainer');
+        
+        // State variables
+        let isAnimating = false;
+        let animationCompleted = false;
+        
+        // Create explosion particles
+        function createExplosionParticles() {
+            explosionContainer.innerHTML = '';
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'explosion-particle';
+                
+                // Random properties for particles
+                const angle = Math.random() * Math.PI * 2;
+                const distance = 50 + Math.random() * 100;
+                const tx = Math.cos(angle) * distance;
+                const ty = Math.sin(angle) * distance;
+                const size = 4 + Math.random() * 8;
+                const delay = Math.random() * 0.5;
+                const duration = 0.5 + Math.random() * 0.5;
+                const colorAngle = Math.random() * 360;
+                
+                // Apply styles
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.background = `linear-gradient(135deg, hsl(${colorAngle}, 100%, 65%), hsl(${colorAngle + 30}, 100%, 55%))`;
+                particle.style.setProperty('--tx', `${tx}px`);
+                particle.style.setProperty('--ty', `${ty}px`);
+                particle.style.animation = `particleFly ${duration}s ease-out ${delay}s forwards`;
+                
+                explosionContainer.appendChild(particle);
+            }
+        }
+        
+        // Create celebration effects
+        function createCelebrationEffects() {
+            celebrationContainer.innerHTML = '';
+            
+            // Create confetti
+            for (let i = 0; i < 150; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                
+                // Random properties
+                const left = Math.random() * 100;
+                const colors = ['#ff7ee6', '#4cc9f0', '#f72585', '#9d4edd', '#4361ee', '#ffcc33'];
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                const delay = Math.random() * 2;
+                const duration = 2 + Math.random() * 3;
+                const size = 6 + Math.random() * 10;
+                const borderRadius = Math.random() > 0.5 ? '50%' : '3px';
+                
+                // Apply styles
+                confetti.style.width = `${size}px`;
+                confetti.style.height = `${size}px`;
+                confetti.style.backgroundColor = color;
+                confetti.style.left = `${left}%`;
+                confetti.style.top = `-20px`;
+                confetti.style.borderRadius = borderRadius;
+                confetti.style.opacity = '0';
+                confetti.style.animation = `float ${duration}s ease-in ${delay}s forwards`;
+                
+                celebrationContainer.appendChild(confetti);
+            }
+            
+            // Create fireworks
+            for (let i = 0; i < 20; i++) {
+                const firework = document.createElement('div');
+                firework.className = 'firework';
+                
+                // Random properties
+                const left = 10 + Math.random() * 80;
+                const top = 20 + Math.random() * 60;
+                const colors = ['#ff7ee6', '#4cc9f0', '#f72585', '#ffcc33'];
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                const delay = 1 + Math.random() * 3;
+                const duration = 1 + Math.random() * 2;
+                const size = 4 + Math.random() * 6;
+                
+                // Apply styles
+                firework.style.width = `${size}px`;
+                firework.style.height = `${size}px`;
+                firework.style.backgroundColor = color;
+                firework.style.left = `${left}%`;
+                firework.style.top = `${top}%`;
+                firework.style.opacity = '0';
+                firework.style.boxShadow = `0 0 10px ${color}, 0 0 20px ${color}`;
+                firework.style.animation = `explode ${duration}s ease-in-out ${delay}s infinite`;
+                
+                celebrationContainer.appendChild(firework);
+            }
+        }
+        
+        // Start the transformation animation
+        function startTransformation() {
+            if (isAnimating) return;
+            
+            isAnimating = true;
+            animationCompleted = false;
+            
+            // Reset elements
+            digit5.style.opacity = '1';
+            digit5.style.transform = 'scale(1) rotate(0deg)';
+            digit6.style.opacity = '0';
+            digit6.style.transform = 'scale(0.5) rotate(-180deg)';
+            finalGraphic.style.opacity = '0';
+            finalGraphic.style.pointerEvents = 'none';
+            countdownText.textContent = "Transforming 2025 to 2026...";
+            
+            // Prepare explosion particles
+            createExplosionParticles();
+            
+            // Step 1: Make "5" pulse
+            setTimeout(() => {
+                digit5.style.transform = 'scale(1.2)';
+                digit5.style.filter = 'drop-shadow(0 0 20px rgba(255, 179, 71, 0.8))';
+            }, 500);
+            
+            // Step 2: Explode the "5"
+            setTimeout(() => {
+                // Show explosion container
+                explosionContainer.style.opacity = '1';
+                
+                // Hide the "5" with explosion effect
+                digit5.style.opacity = '0';
+                digit5.style.transform = 'scale(0)';
+                digit5.style.filter = 'none';
+                
+                // Trigger particle animations
+                const particles = document.querySelectorAll('.explosion-particle');
+                particles.forEach(particle => {
+                    particle.style.opacity = '1';
+                });
+                
+                // Show transition effect
+                transitionEffect.style.opacity = '1';
+                transitionEffect.style.animation = 'explode 0.8s ease-out forwards';
+                
+                // Step 3: Reveal the "6"
+                setTimeout(() => {
+                    digit6.style.opacity = '1';
+                    digit6.style.animation = 'numberAppear 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards';
+                    
+                    // Hide explosion
+                    setTimeout(() => {
+                        explosionContainer.style.opacity = '0';
+                        transitionEffect.style.opacity = '0';
+                        
+                        // Step 4: Show final graphic
+                        setTimeout(() => {
+                            finalGraphic.style.opacity = '1';
+                            finalGraphic.style.pointerEvents = 'auto';
+                            
+                            // Create celebration effects
+                            createCelebrationEffects();
+                            
+                            // Update text
+                            countdownText.textContent = "Welcome to 2026! Happy New Year!";
+                            
+                            // Animation completed
+                            isAnimating = false;
+                            animationCompleted = true;
+                        }, 500);
+                    }, 800);
+                }, 300);
+            }, 1200);
+        }
+        
+        // Reset the animation
+        function resetAnimation() {
+            if (isAnimating) return;
+            
+            // Reset all elements to initial state
+            digit5.style.opacity = '1';
+            digit5.style.transform = 'scale(1) rotate(0deg)';
+            digit5.style.filter = 'none';
+            digit5.style.animation = 'none';
+            
+            digit6.style.opacity = '0';
+            digit6.style.transform = 'scale(0.5) rotate(-180deg)';
+            digit6.style.animation = 'none';
+            
+            explosionContainer.style.opacity = '0';
+            transitionEffect.style.opacity = '0';
+            transitionEffect.style.animation = 'none';
+            transitionEffect.style.width = '0';
+            transitionEffect.style.height = '0';
+            
+            finalGraphic.style.opacity = '0';
+            finalGraphic.style.pointerEvents = 'none';
+            
+            countdownText.textContent = "Watch 2025 transform into 2026";
+            
+            // Clear celebration effects
+            celebrationContainer.innerHTML = '';
+            
+            animationCompleted = false;
+        }
+        
+        // Add click effect to the final graphic
+        function setupFinalGraphicInteraction() {
+            finalGraphic.addEventListener('click', function() {
+                if (!animationCompleted) return;
+                
+                // Add a pulse effect when clicked
+                this.style.transform = 'scale(1.05)';
+                this.style.transition = 'transform 0.3s ease';
+                
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                }, 300);
+                
+                // Add extra celebration
+                createCelebrationEffects();
+            });
+        }
+        
+        // Initialize the animation
+        function initAnimation() {
+            // Set up event listeners
+            startBtn.addEventListener('click', startTransformation);
+            resetBtn.addEventListener('click', resetAnimation);
+            
+            // Set up final graphic interaction
+            setupFinalGraphicInteraction();
+            
+            // Add keyboard controls
+            document.addEventListener('keydown', function(e) {
+                if (e.key === ' ' || e.key === 'Enter') {
+                    if (!animationCompleted) {
+                        startTransformation();
+                    } else {
+                        resetAnimation();
+                    }
+                }
+                
+                if (e.key === 'Escape') {
+                    resetAnimation();
+                }
+            });
+            
+            // Add automatic transformation after 5 seconds if user doesn't interact
+            setTimeout(() => {
+                if (!animationCompleted && !isAnimating) {
+                    startTransformation();
+                }
+            }, 5000);
+        }
+        
+        // Start when page loads
+        document.addEventListener('DOMContentLoaded', initAnimation);
+        
+        // Add some floating effect to the year display
+        setInterval(() => {
+            if (!isAnimating && !animationCompleted) {
+                yearDisplay.style.transform = 'translateY(-5px)';
+                yearDisplay.style.transition = 'transform 2s ease-in-out';
+                
+                setTimeout(() => {
+                    yearDisplay.style.transform = 'translateY(0)';
+                }, 2000);
+            }
+        }, 4000);
+    </script>
+</body>
+</html>
